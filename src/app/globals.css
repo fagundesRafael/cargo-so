@@ -12,16 +12,43 @@ body {
   @apply bg-bodyBackGround;
 }
 
-select,
-input[type="email"],
-input[type="password"],
-input[type="text"] {
-    @apply block w-full mb-2 rounded-xl;
-    @apply border p-2 border-gray-300 bg-gray-100;
+input[id="searchOptions"],
+select[id="searchOptions"] {
+  @apply block;
+  @apply border border-gray-300 bg-gray-100;
 }
-input[type="email"]:disabled,
-input[type="password"]:disabled,
-input[type="tel"]:disabled,
-input[type="text"]:disabled {
-    @apply bg-gray-300 border-0 cursor-not-allowed text-gray-500;
+
+select[id="procedimento"],
+select[id="situacao"],
+select[id="chave"],
+select[id="cor"],
+input[id="email"],
+input[id="number"],
+input[id="password"],
+input[id="numero"],
+input[id="marca"],
+input[id="modelo"],
+input[id="placa"],
+input[id="chassi"],
+input[id="text"] {
+  @apply block mb-2 rounded-xl;
+  @apply border p-2 border-gray-300 bg-gray-100;
+}
+input[id="email"]:disabled,
+input[id="number"]:disabled,
+input[id="password"]:disabled,
+input[id="numero"]:disabled,
+input[id="marca"]:disabled,
+input[id="modelo"]:disabled,
+input[id="placa"]:disabled,
+input[id="chassi"]:disabled,
+input[id="tel"]:disabled,
+input[id="text"]:disabled {
+  @apply bg-gray-300 border-0 cursor-not-allowed text-gray-500;
+}
+
+select[id="searchOptions"],
+input[id="searchOptions"] {
+  @apply block mb-2 rounded-none;
+  @apply border-none p-1;
 }

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -16,14 +16,14 @@ export default function HomePage() {
     setLoginInProgress(true);
     setError(null);
 
-    await signIn('credentials', {name, email, password, callbackUrl: '/'});
+    await signIn("credentials", { name, email, password, callbackUrl: "/" });
 
     setLoginInProgress(false);
   }
 
   return (
     <section className={"mx-auto mt-2 flex flex-col items-center"}>
-      <h1 className="text-center text-templateTextDeadBlue text-4xl my-4">
+      <h1 className="text-center text-templateDeadBlue text-4xl my-4">
         Entrar
       </h1>
       <form
@@ -31,6 +31,8 @@ export default function HomePage() {
         onSubmit={handleFormSubmit}
       >
         <input
+          className={"w-full"}
+          id="name"
           name="name"
           type="text"
           placeholder="nome:"
@@ -39,6 +41,8 @@ export default function HomePage() {
           onChange={(e) => setName(e.target.value)}
         />
         <input
+          className={"w-full"}
+          id="email"
           name="email"
           type="email"
           placeholder="email:"
@@ -47,6 +51,8 @@ export default function HomePage() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          className={"w-full"}
+          id="password"
           name="password"
           type="password"
           placeholder="senha:"
@@ -65,7 +71,7 @@ export default function HomePage() {
         </button>
         {error && <div className="text-red-500 text-center">{error}</div>}
         <div className="my-2 text-center text-gray-700">
-            {""} ou faça seu login com provedor de terceiros
+          {""} ou faça seu login com provedor de terceiros
         </div>
         <button className="flex gap-2 justify-center w-full border py-2 rounded-xl">
           <Image

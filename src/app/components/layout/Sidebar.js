@@ -1,8 +1,9 @@
 "use client";
-import { BsBoxes, BsFillGearFill } from "react-icons/bs";
+import { BsFillGearFill } from "react-icons/bs";
 import { BiCar } from "react-icons/bi";
 import { GiPistolGun, GiPowder } from "react-icons/gi";
 import { FaMobileAlt, FaUsersCog, FaUserCircle } from "react-icons/fa";
+import { PiMotorcycleFill } from "react-icons/pi";
 import { AiFillDatabase } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 import MenuLink from "../ui/MenuLink";
@@ -15,22 +16,22 @@ export default function Sidebar() {
       title: "ITENS",
       list: [
         {
-          label: "Listar todos",
-          path: "/",
-          icon: <BsBoxes />,
+          label: "Motocicletas",
+          path: "/motocicletas",
+          icon: <PiMotorcycleFill />,
         },
         {
-          label: "Veículos em geral",
-          path: "/veiculos",
+          label: "Automóveis",
+          path: "/automoveis",
           icon: <BiCar />,
         },
         {
-          label: "Armas e munições",
+          label: "Armas/munições",
           path: "/armasemunicoes",
           icon: <GiPistolGun />,
         },
         {
-          label: "Aparelhos telefônicos",
+          label: "Telefones",
           path: "/telefones",
           icon: <FaMobileAlt />,
         },
@@ -88,17 +89,17 @@ export default function Sidebar() {
   return (
     <div className={`${sideBarStick}`}>
       <div className={"flex gap-2 items-center mt-3"}>
-        <FaUserCircle className={"text-templateiconDeadBlue text-[28px]"} />
+        <FaUserCircle className={"text-templateDeadBlue text-[28px]"} />
         {status === "authenticated" && (
-          <h2 className={"text-templateTextGrey text-[12px] font-bold"}>
+          <h2 className={"text-templateGrey text-[12px] font-bold"}>
             Bem vindo{" "}
-            <span className={"text-templateTextGreen"}>{userNameSession?.split(" ")[0]}</span>
+            <span className={"text-templateGreen"}>{userNameSession?.split(" ")[0]}</span>
           </h2>
         )}
       </div>
       <ul>
         {menuItens.map((item) => (
-          <li className={"mt-6 text-templateTextDeadBlue"} key={item.title}>
+          <li className={"mt-6 text-templateDeadBlue"} key={item.title}>
             <span>{item.title}</span>
             {item.list.map((item) => (
               <MenuLink key={item.label} item={item} />
@@ -110,7 +111,7 @@ export default function Sidebar() {
       <button
         onClick={handleSignOut}
         className={
-          "flex gap-2 items-center mt-8 text-templateTextDeadBlue text-[12px] font-bold"
+          "flex gap-2 items-center mt-8 text-templateDeadBlue text-[12px] font-bold"
         }
       >
         <MdLogout className={"text-[26px]"} />

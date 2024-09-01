@@ -14,7 +14,7 @@ export default function CardStatus({
       <Link
         href={path}
         className={
-          " bg-templateWhite my-2 p-3 rounded-lg shadow-lg text-templateTextDeadBlue"
+          " bg-templateWhite my-2 p-3 rounded-lg shadow-lg text-templateDeadBlue"
         }
       >
         <h2 className={"text-xs"}>{description}</h2>
