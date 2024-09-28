@@ -1,35 +1,24 @@
 import { LuChevronsUpDown } from "react-icons/lu";
-import DropDown from "../components/ui/DropDown";
 import { MdOutlineAddCircleOutline, MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import Link from "next/link";
 import { fetchAutos } from "@/actions/fetchItem/Auto";
 import { formatDate } from "@/utils/formatDate";
-import Pagination from "../components/ui/pagination";
-import SearchHeader from "../components/ui/SearchHeader";
+import Pagination from "../../components/ui/pagination";
+import SearchHeader from "../../components/ui/SearchHeader";
 
 export default async function Automoveis({ searchParams }) {
   const pr = searchParams?.pr || "";
   const nu = searchParams?.nu || "";
   const pl = searchParams?.pl || "";
   const ch = searchParams?.ch || "";
+  const ma = searchParams?.ma || "";
+  const mo = searchParams?.mo || "";
   const page = searchParams?.page || 1;
-  const { count, autos } = await fetchAutos(pr, nu, pl, ch, page);
+  const { count, autos } = await fetchAutos(pr, nu, pl, ch, ma, mo, page);
 
   return (
     <div className={"flex flex-col min-h-[100vh] w-full"}>
-      {/* <div
-        style={{ width: "calc(100% - 16px)" }}
-        className={
-          "flex items-center justify-between gap-3 my-2 px-3 pb-1 bg-templateWhite rounded-lg shadow-lg  text-templateDeadBlue"
-        }
-      >
-        <FaSearchPlus className={"text-xl"} />
-        <Search searchValue={"pr"} label={"pelo procedimento:"} />
-        <Search searchValue={"nu"} label={"pelo número:"} />
-        <Search searchValue={"pl"} label={"pela placa:"} />
-        <Search searchValue={"ch"} label={"pelo chassi:"} />
-      </div> */}
       <SearchHeader />
 
       <div
@@ -206,8 +195,16 @@ export default async function Automoveis({ searchParams }) {
                         "flex justify-end items-center w-[60px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      <FaRegEdit className={"text-templateGreen w-6"} />
-                      <MdDelete className={"text-red-600 w-6"} />
+                      <Link href={`/automoveis/${auto.id}`}>
+                        <FaRegEdit
+                          className={
+                            "text-templateGreen w-6 transition-transform duration-200 ease-in-out hover:scale-125 hover:text-green-900 "
+                          }
+                        />
+                      </Link>
+                      <button>
+                        <MdDelete className="text-red-600 w-7 transition-transform duration-200 ease-in-out hover:scale-150 hover:text-red-800 hover:cursor-not-allowed " />
+                      </button>
                     </td>
                   </tr>
                 ))}

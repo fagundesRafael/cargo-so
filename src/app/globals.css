@@ -22,7 +22,9 @@ select[id="procedimento"],
 select[id="situacao"],
 select[id="chave"],
 select[id="cor"],
+input[id="imagem"],
 input[id="email"],
+input[id="name"],
 input[id="number"],
 input[id="password"],
 input[id="numero"],
@@ -34,7 +36,10 @@ input[id="text"] {
   @apply block mb-2 rounded-xl;
   @apply border p-2 border-gray-300 bg-gray-100;
 }
+
+input[id="imagem"]:disabled,
 input[id="email"]:disabled,
+input[id="name"]:disabled,
 input[id="number"]:disabled,
 input[id="password"]:disabled,
 input[id="numero"]:disabled,

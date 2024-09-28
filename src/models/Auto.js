@@ -32,9 +32,14 @@ const AutoSchema = new Schema(
     situacao: {
       type: String,
     },
+    imagem: {
+      type: String,
+    },
     createdBy: {
       type: String,
-      required: true,
+    },
+    updatedBy: {
+      type: String,
     },
     observacao: {
       type: String,

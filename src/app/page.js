@@ -1,6 +1,6 @@
-import CardStatus from "./components/layout/CardStatus";
-import BlueReport from "./components/layout/BlueReport";
-import Painel from "./components/layout/Painel";
+import CardStatus from "../components/layout/CardStatus";
+import BlueReport from "../components/layout/BlueReport";
+import Painel from "../components/layout/Painel";
 
 export default function Home() {
 

@@ -1,19 +1,20 @@
 "use client";
 import { addNewAuto } from "@/actions/addItem/Auto";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useState } from "react";
+import UpLoad from "@/components/ui/UpLoad";
 
 export default function Registrar() {
   const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   const session = useSession();
   const status = session.status;
   if (session.status === "authenticated") {
     var userNameSession = session.data.user.name;
   }
-  console.log(status)
-  console.log(userNameSession)
+  console.log(status);
+  console.log(userNameSession);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -99,7 +100,9 @@ export default function Registrar() {
           placeholder="PLACA"
           disabled={loading}
           style={{ textTransform: "uppercase" }}
-          onInput={(e) => { e.target.value = e.target.value.replace(/\s/g, '').toUpperCase(); }}
+          onInput={(e) => {
+            e.target.value = e.target.value.replace(/\s/g, "").toUpperCase();
+          }}
         />
 
         <input
@@ -156,7 +159,16 @@ export default function Registrar() {
           <option value="RESTITUÍDO">RESTITUÍDO</option>
           <option value="OUTRO">OUTRO</option>
         </select>
-        {/* <input type="file" placeholder="carregar imagem" /> */}
+        <input
+          className={"w-44"}
+          name="imagem"
+          id="imagem"
+          type="text"
+          placeholder="imagem URL"
+          disabled={loading}
+          onInput={(e) => (e.target.value = e.target.value)}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
         <textarea
           className={"w-full min-h-24 p-2 bg-slate-100 mb-2 "}
           name="observacao"
@@ -178,17 +190,8 @@ export default function Registrar() {
           "w-[720px] relative flex flex-col my-2 p-3 bg-templateWhite rounded-lg shadow-lg  text-templateDeadBlue"
         }
       >
-        <h1>IMAGEM DO VEÍCULO:</h1>
-        <span className={"text-[10px] text-slate-700 "}>
-          Aguarde o carregamento da imagem...
-        </span>
-        <Image
-          className={"relative p-2"}
-          src={"/generics-utils/no-image.jpg"}
-          layout={"fill"}
-          objectFit={"contain"}
-          alt={"no-image"}
-        />
+        <h1> GERAR IMAGEM DO VEÍCULO:</h1>
+        <UpLoad setImageUrl={imageUrl} />
       </div>
     </div>
   );

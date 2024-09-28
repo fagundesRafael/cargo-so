@@ -1,13 +1,12 @@
-"use server"
+"use server";
 import { Auto } from "@/models/Auto";
 import { connectToDB } from "@/mongoDb/connect";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-
-export const addNewAuto = async (formData) => {
-  
+export const updateAuto = async (formData) => {
   const {
+    id,
     procedimento,
     numero,
     marca,
@@ -20,11 +19,12 @@ export const addNewAuto = async (formData) => {
     imagem,
     observacao,
     createdBy,
+    updatedBy,
   } = Object.fromEntries(formData);
 
   try {
     connectToDB();
-    const newAuto = new Auto({
+    const updateFields = {
       procedimento,
       numero,
       marca,
@@ -37,19 +37,24 @@ export const addNewAuto = async (formData) => {
       imagem,
       observacao,
       createdBy,
-    });
+      updatedBy,
+    };
 
-    await newAuto.save()
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || undefined) && delete updateFields[key]
+    );
 
+    await Auto.findByIdAndUpdate(id, updateFields);
   } catch (error) {
     console.log(error);
-    if (error.name === 'ValidationError') {
+    if (error.name === "ValidationError") {
       for (let field in error.errors) {
         const errorMessage = error.errors[field].message;
         console.log(errorMessage);
       }
     }
-    throw new Error('Ocorreu um erro de validação.');
+    throw new Error(errorMessage);
   }
   revalidatePath("/automoveis");
   redirect("/automoveis");
