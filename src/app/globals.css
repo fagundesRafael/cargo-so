@@ -52,6 +52,10 @@ input[id="text"]:disabled {
   @apply bg-gray-300 border-0 cursor-not-allowed text-gray-500;
 }
 
+span[id="spanCreatedBy"],
+span[id="spanCreatedAt"] {
+  @apply w-44 text-[12px] text-templateGray;
+}
 select[id="searchOptions"],
 input[id="searchOptions"] {
   @apply block mb-2 rounded-none;

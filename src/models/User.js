@@ -16,8 +16,12 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
-  { Timestamps: true }
+  { timestamps: true }
 );
 
 export const User = models.User || model("User", UserSchema);

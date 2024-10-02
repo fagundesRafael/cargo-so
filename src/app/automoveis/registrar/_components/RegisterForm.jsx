@@ -190,7 +190,6 @@ export default function Registrar() {
           "w-[720px] relative flex flex-col my-2 p-3 bg-templateWhite rounded-lg shadow-lg  text-templateDeadBlue"
         }
       >
-        <h1> GERAR IMAGEM DO VEÍCULO:</h1>
         <UpLoad setImageUrl={imageUrl} />
       </div>
     </div>

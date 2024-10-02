@@ -4,21 +4,35 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 
-export default function HomePage() {
+export const LoginForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginInProgress, setLoginInProgress] = useState(false);
-  const [error, setError] = useState(null);
+  const [disabled, setDisabled] = useState(false);
+  const [error, setError] = useState(false);
 
   async function handleFormSubmit(e) {
     e.preventDefault();
-    setLoginInProgress(true);
-    setError(null);
+    setError(false);
+    setDisabled(true);
 
-    await signIn("credentials", { name, email, password, callbackUrl: "/" });
+    const result = await signIn("credentials", {
+      name,
+      email,
+      password,
+      redirect: false,
+    });
 
-    setLoginInProgress(false);
+    if (result.error) {
+      setError(true);
+      setDisabled(false);
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+      console.log(error);
+    } else {
+      window.location.href = result.url;
+    }
   }
 
   return (
@@ -36,9 +50,9 @@ export default function HomePage() {
           name="name"
           type="text"
           placeholder="nome:"
-          disabled={loginInProgress}
           value={name}
           onChange={(e) => setName(e.target.value)}
+          disabled={disabled}
         />
         <input
           className={"w-full"}
@@ -46,9 +60,9 @@ export default function HomePage() {
           name="email"
           type="email"
           placeholder="email:"
-          disabled={loginInProgress}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={disabled}
         />
         <input
           className={"w-full"}
@@ -56,20 +70,27 @@ export default function HomePage() {
           name="password"
           type="password"
           placeholder="senha:"
-          disabled={loginInProgress}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={disabled}
         />
         <button
           type="submit"
-          disabled={setLoginInProgress}
+          disabled={disabled}
           className={
             "border w-full rounded-xl py-2 bg-templateRed text-templateWhite"
           }
         >
           Entrar
         </button>
-        {error && <div className="text-red-500 text-center">{error}</div>}
+        {error && (
+          <div className={" flex flex-col text-red-500 text-center"}>
+            Erro de Credenciais!{" "}
+            <span className={"text-[12px]"}>
+              Verifique e informe corretamente seu login, email e senha!
+            </span>{" "}
+          </div>
+        )}
         <div className="my-2 text-center text-gray-700">
           {""} ou faça seu login com provedor de terceiros
         </div>
@@ -91,4 +112,4 @@ export default function HomePage() {
       </form>
     </section>
   );
-}
+};

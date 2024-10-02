@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export default function RegisterPage() {
+export default function RegisterForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,6 +68,8 @@ export default function RegisterPage() {
         onSubmit={handleFormSubmit}
       >
         <input
+        className={"w-full"}
+          id="name"
           type="text"
           placeholder="nome:"
           disabled={creatingUser}
@@ -75,6 +77,8 @@ export default function RegisterPage() {
           onChange={(e) => setName(e.target.value)}
         />
         <input
+        className={"w-full"}
+        id="email"
           type="email"
           placeholder="email:"
           disabled={creatingUser}
@@ -82,6 +86,8 @@ export default function RegisterPage() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+        className={"w-full"}
+        id="password"
           type="password"
           placeholder="senha:"
           disabled={creatingUser}

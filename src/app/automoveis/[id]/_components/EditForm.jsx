@@ -2,9 +2,15 @@
 import { updateAuto } from "@/actions/updateItem/Auto";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { formatDateWithTime } from "@/utils/formatDate";
 
 export const EditForm = ({ auto }) => {
   const [data, setData] = useState(JSON.parse(auto));
+  const [imageUrl, setImageUrl] = useState(data.imagem);
+
+  const createdAt = formatDateWithTime(data.createdAt);
+  const updatedAt = formatDateWithTime(data.updatedAt);
+
   console.log("fetched data", data);
   console.log("fetched auto", auto);
 
@@ -42,7 +48,6 @@ export const EditForm = ({ auto }) => {
         title="Informe se é o procedimento é um Inquérito, BO, TCO, etc."
         defaultValue={data.procedimento}
         required={true}
-        // onChange={(e) => setData({ ...data, procedimento: e.target.value })}
       >
         <option value="">PROCEDIMENTO</option>
         <option value="APF">FLAGRANTE</option>
@@ -65,9 +70,6 @@ export const EditForm = ({ auto }) => {
         title="Números separados por barras, pontos ou traços. Exemplo: 123/2022 ou 123.2022 ou 123-2022"
         pattern="^(?=.*[\/\.\-])[0-9\/\.\-]*$"
         defaultValue={data.numero}
-        // onChange={(e) =>
-        //   setData({ ...data, numero: e.target.value.toUpperCase() })
-        // }
       />
 
       <input
@@ -79,9 +81,6 @@ export const EditForm = ({ auto }) => {
         disabled={false}
         style={{ textTransform: "uppercase" }}
         defaultValue={data.marca}
-        // onChange={(e) =>
-        //   setData({ ...data, marca: e.target.value.toUpperCase() })
-        // }
       />
 
       <input
@@ -93,9 +92,6 @@ export const EditForm = ({ auto }) => {
         disabled={false}
         style={{ textTransform: "uppercase" }}
         defaultValue={data.modelo}
-        // onChange={(e) =>
-        //   setData({ ...data, modelo: e.target.value.toUpperCase() })
-        // }
       />
 
       <input
@@ -106,13 +102,9 @@ export const EditForm = ({ auto }) => {
         placeholder="PLACA"
         disabled={false}
         style={{ textTransform: "uppercase" }}
-        defaultValue={data.placa === "SEM PLACA" ? (data.placa = "") : data.placa}
-        // onChange={(e) =>
-        //   setData({
-        //     ...data,
-        //     placa: e.target.value.replace(/\s/g, "").toUpperCase(),
-        //   })
-        // }
+        defaultValue={
+          data.placa === "SEM PLACA" ? (data.placa = "") : data.placa
+        }
       />
 
       <input
@@ -123,8 +115,9 @@ export const EditForm = ({ auto }) => {
         placeholder="CHASSI"
         disabled={false}
         style={{ textTransform: "uppercase" }}
-        defaultValue={data.chassi === "SEM CHASSI" ? (data.chassi = "") : data.chassi}
-        // onChange={(e) => setData({...data, chassi: e.target.value.toUpperCase()})}
+        defaultValue={
+          data.chassi === "SEM CHASSI" ? (data.chassi = "") : data.chassi
+        }
       />
 
       <select
@@ -134,7 +127,6 @@ export const EditForm = ({ auto }) => {
         required={true}
         disabled={false}
         defaultValue={data.cor}
-        // onChange={(e) => setData({ ...data, cor: e.target.value })}
       >
         <option value="">COR</option>
         <option value="BRANCO">BRANCO</option>
@@ -156,7 +148,6 @@ export const EditForm = ({ auto }) => {
         disabled={false}
         title="Informe se a chave do veículo foi apreendida ou não."
         defaultValue={data.chave}
-        // onChange={(e) => setData({ ...data, chave: e.target.value })}
       >
         <option value="">CHAVE APREENDIDA?</option>
         <option value={true}>SIM</option>
@@ -169,16 +160,23 @@ export const EditForm = ({ auto }) => {
         required={true}
         title="Informe a localização do veículo em tela."
         defaultValue={data.situacao}
-        // onChange={(e) =>
-        //   setData({ ...data, situacao: e.target.value.toUpperCase() })
-        // }
       >
         <option value="">SITUAÇÃO</option>
         <option value="PÁTIO">PÁTIO</option>
         <option value="RESTITUÍDO">RESTITUÍDO</option>
         <option value="OUTRO">OUTRO</option>
       </select>
-      {/* <input type="file" placeholder="carregar imagem" /> */}
+      <input
+        className={"w-44"}
+        name="imagem"
+        id="imagem"
+        type="text"
+        placeholder="imagem URL"
+        onInput={(e) => (e.target.value = e.target.value)}
+        onChange={(e) => setImageUrl(e.target.value)}
+        value={imageUrl}
+      />
+
       <textarea
         className={"w-full min-h-24 p-2 bg-slate-100 mb-2 "}
         name="observacao"
@@ -187,7 +185,6 @@ export const EditForm = ({ auto }) => {
         disabled={false}
         placeholder="Observações adicionais:"
         defaultValue={data.observacao}
-        // onChange={(e) => setData({ ...data, observacao: e.target.value })}
       ></textarea>
       <button
         type="submit"
@@ -195,6 +192,20 @@ export const EditForm = ({ auto }) => {
       >
         REGISTRAR VEÍCULO
       </button>
+      <div className={"flex text-center items-center ml-auto"} >
+      <span id="spanCreatedBy">
+        Criado por <span className={"underline font-semibold"} >{data.createdBy}</span> <br />
+        dia {createdAt.slice(0, 10)}, às {createdAt.slice(11, 14)}h {" "}
+        {createdAt.slice(15, 17)}m.
+      </span>
+      {data.updatedAt && (
+        <span id="spanCreatedBy">
+        Atualizado por <span className={"underline font-semibold"} >{data.updatedBy}</span> <br />
+        no dia {updatedAt.slice(0, 10)}, às {updatedAt.slice(11, 14)}h {" "}
+        {updatedAt.slice(15, 17)}m.
+      </span>
+      )}
+      </div>
     </form>
   );
 };

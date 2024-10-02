@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className={"p-3 bg-headerBackGround flex gap-2 items-center relative"}>
+    <header className={"p-3 bg-headerBackGround w-full flex gap-2 items-center relative"}>
       <Link href="/">
         <Image
           src="/cargo-utils/logos/Cargo-logo-01.png"

@@ -5,10 +5,11 @@ import { GiPistolGun, GiPowder } from "react-icons/gi";
 import { FaMobileAlt, FaUsersCog, FaUserCircle } from "react-icons/fa";
 import { PiMotorcycleFill } from "react-icons/pi";
 import { AiFillDatabase } from "react-icons/ai";
-import { MdLogout } from "react-icons/md";
+import { MdLogin, MdLogout } from "react-icons/md";
 import MenuLink from "../ui/MenuLink";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function Sidebar() {
   const menuItens = [
@@ -75,7 +76,7 @@ export default function Sidebar() {
   }
 
   const handleSignOut = async () => {
-    await signOut({callbackUrl: "/login"});
+    await signOut({ callbackUrl: "/login" });
   };
 
   const session = useSession();
@@ -93,7 +94,9 @@ export default function Sidebar() {
         {status === "authenticated" && (
           <h2 className={"text-templateGrey text-[12px] font-bold"}>
             Bem vindo{" "}
-            <span className={"text-templateGreen"}>{userNameSession?.split(" ")[0]}</span>
+            <span className={"text-templateGreen"}>
+              {userNameSession?.split(" ")[0]}
+            </span>
           </h2>
         )}
       </div>
@@ -107,16 +110,27 @@ export default function Sidebar() {
           </li>
         ))}
       </ul>
-
-      <button
-        onClick={handleSignOut}
-        className={
-          "flex gap-2 items-center mt-8 text-templateDeadBlue text-[12px] font-bold"
-        }
-      >
-        <MdLogout className={"text-[26px]"} />
-        Sair (logout)
-      </button>
+      {session.status === "authenticated" ? (
+        <button
+          onClick={handleSignOut}
+          className={
+            "flex gap-2 items-center mt-8 text-templateDeadBlue text-[12px] font-bold"
+          }
+        >
+          <MdLogout className={"text-[26px]"} />
+          Sair (logout)
+        </button>
+      ) : (
+        <Link
+          href={"/login"}
+          className={
+            "flex gap-2 items-center mt-8 text-templateGreen text-[12px] font-bold"
+          }
+        >
+          <MdLogin className={"text-[26px]"} />
+          Entrar (login)
+        </Link>
+      )}
     </div>
   );
 }
