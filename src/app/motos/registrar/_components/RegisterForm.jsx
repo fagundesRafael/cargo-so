@@ -1,21 +1,13 @@
 "use client";
-import { updateAuto } from "@/actions/updateItem/Auto";
-import { useState } from "react";
+import { addNewMoto } from "@/actions/addItem/Moto";
 import { useSession } from "next-auth/react";
-import { formatDateWithTime } from "@/utils/formatDate";
-import { colors, procedures, carBrands } from "@/utils/avaliableOptions";
+import { useState } from "react";
+import { colors, procedures, motoBrands } from "@/utils/avaliableOptions";
 
-export const EditForm = ({ auto }) => {
-  const [data, setData] = useState(JSON.parse(auto));
-  const [brand, setBrand] = useState(data.marca);
-  const [imageUrl, setImageUrl] = useState(data.imagem);
+export default function Registrar() {
   const [loading, setLoading] = useState(false);
-
-  const createdAt = formatDateWithTime(data.createdAt);
-  const updatedAt = formatDateWithTime(data.updatedAt);
-
-  console.log("fetched data", data);
-  console.log("fetched auto", auto);
+  const [imageUrl, setImageUrl] = useState("");
+  const [brand, setBrand] = useState("");
 
   const session = useSession();
   const status = session.status;
@@ -27,10 +19,11 @@ export const EditForm = ({ auto }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.target);
-    formData.append("updatedBy", userNameSession);
-
-    await updateAuto(formData);
+    formData.append("createdBy", userNameSession);
+    await addNewMoto(formData);
+    setLoading(false);
   }
 
   return (
@@ -41,16 +34,15 @@ export const EditForm = ({ auto }) => {
       }
     >
       <label className={"w-full p-1 mb-2"}>
-        ATUALIZE CORRETAMENTE OS DADOS DO NOVO VEÍCULO:
+        PREENCHA CORRETAMENTE OS DADOS DO NOVO VEÍCULO:
       </label>
-      <input type="hidden" name="id" value={data._id} />
       <select
         className={"w-44"}
         name="procedimento"
         id="procedimento"
         title="Informe se é o procedimento é um Inquérito, BO, TCO, etc."
-        defaultValue={data.procedimento}
         required={true}
+        disabled={loading}
       >
         {procedures.map((procedure) => (
           <option key={procedure.label} value={procedure.value}>
@@ -65,11 +57,10 @@ export const EditForm = ({ auto }) => {
         id="numero"
         placeholder="NÚMERO"
         required={true}
+        disabled={loading}
         title="Números separados por barras, pontos ou traços. Exemplo: 123/2022 ou 123.2022 ou 123-2022"
         pattern="^(?=.*[\/\.\-])[0-9\/\.\-]*$"
-        defaultValue={data.numero}
       />
-
       <select
         className={"w-44"}
         name="marca"
@@ -77,9 +68,8 @@ export const EditForm = ({ auto }) => {
         required={true}
         disabled={loading}
         onChange={(e) => setBrand(e.target.value)}
-        defaultValue={data.marca}
       >
-        {carBrands.map((brand) => (
+        {motoBrands.map((brand) => (
           <option key={brand.brand} value={brand.brand}>
             {brand.brand}
           </option>
@@ -92,9 +82,11 @@ export const EditForm = ({ auto }) => {
         id="modelo"
         required={true}
         disabled={loading || !brand}
-        defaultValue={data.modelo}
       >
-        {carBrands
+        <option value="" disabled={loading} selected>
+          MODELO
+        </option>
+        {motoBrands
           .filter((car) => car.brand === brand)
           .flatMap((car) => car.models)
           .map((model) => (
@@ -110,11 +102,11 @@ export const EditForm = ({ auto }) => {
         id="placa"
         type="text"
         placeholder="PLACA"
-        disabled={false}
+        disabled={loading}
         style={{ textTransform: "uppercase" }}
-        defaultValue={
-          data.placa === "SEM PLACA" ? (data.placa = "") : data.placa
-        }
+        onInput={(e) => {
+          e.target.value = e.target.value.replace(/\s/g, "").toUpperCase();
+        }}
       />
 
       <input
@@ -123,11 +115,9 @@ export const EditForm = ({ auto }) => {
         id="chassi"
         type="text"
         placeholder="CHASSI"
-        disabled={false}
+        disabled={loading}
         style={{ textTransform: "uppercase" }}
-        defaultValue={
-          data.chassi === "SEM CHASSI" ? (data.chassi = "") : data.chassi
-        }
+        onInput={(e) => (e.target.value = e.target.value.toUpperCase())}
       />
 
       <select
@@ -135,8 +125,7 @@ export const EditForm = ({ auto }) => {
         name="cor"
         id="cor"
         required={true}
-        disabled={false}
-        defaultValue={data.cor}
+        disabled={loading}
       >
         {colors.map((color) => (
           <option key={color.label} value={color.value}>
@@ -144,16 +133,28 @@ export const EditForm = ({ auto }) => {
           </option>
         ))}
       </select>
+
       <select
         className={"w-44"}
         name="chave"
         id="chave"
         required={true}
-        disabled={false}
+        disabled={loading}
         title="Informe se a chave do veículo foi apreendida ou não."
-        defaultValue={data.chave}
       >
         <option value="">CHAVE APREENDIDA?</option>
+        <option value={true}>SIM</option>
+        <option value={false}>NÃO</option>
+      </select>
+      <select
+        className={"w-44"}
+        name="capacete"
+        id="capacete"
+        required={true}
+        disabled={loading}
+        title="Informe se houve capacete apreendido."
+      >
+        <option value="">CAPACETE APREENDIDO?</option>
         <option value={true}>SIM</option>
         <option value={false}>NÃO</option>
       </select>
@@ -163,7 +164,6 @@ export const EditForm = ({ auto }) => {
         id="situacao"
         required={true}
         title="Informe a localização do veículo em tela."
-        defaultValue={data.situacao}
       >
         <option value="">SITUAÇÃO</option>
         <option value="PÁTIO">PÁTIO</option>
@@ -176,44 +176,25 @@ export const EditForm = ({ auto }) => {
         id="imagem"
         type="text"
         placeholder="imagem URL"
+        disabled={loading}
         onInput={(e) => (e.target.value = e.target.value)}
         onChange={(e) => setImageUrl(e.target.value)}
-        value={imageUrl}
       />
-
       <textarea
         className={"w-full min-h-24 p-2 bg-slate-100 mb-2 "}
         name="observacao"
         id="observacao"
         cols="14"
-        disabled={false}
+        disabled={loading}
         placeholder="Observações adicionais:"
-        defaultValue={data.observacao}
       ></textarea>
       <button
-        type="submit"
+        type={"submit"}
         className={"bg-templateDeadBlue text-templateWhite p-2 rounded-lg"}
+        disabled={loading}
       >
         REGISTRAR VEÍCULO
       </button>
-      <div className={"flex text-center items-center ml-auto"}>
-        <span id="spanCreatedBy">
-          Criado por{" "}
-          <span className={"underline font-semibold"}>{data.createdBy}</span>{" "}
-          <br />
-          dia {createdAt.slice(0, 10)}, às {createdAt.slice(11, 14)}h{" "}
-          {createdAt.slice(15, 17)}m.
-        </span>
-        {data.updatedAt && (
-          <span id="spanCreatedBy">
-            Atualizado por{" "}
-            <span className={"underline font-semibold"}>{data.updatedBy}</span>{" "}
-            <br />
-            no dia {updatedAt.slice(0, 10)}, às {updatedAt.slice(11, 14)}h{" "}
-            {updatedAt.slice(15, 17)}m.
-          </span>
-        )}
-      </div>
     </form>
   );
-};
+}

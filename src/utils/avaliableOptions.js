@@ -1,5 +1,3 @@
-import { models } from "mongoose";
-
 export const colors = [
     { value: "", label: "COR" },
     { value: "BRANCO", label: "BRANCO" },
@@ -90,4 +88,34 @@ export const procedures = [
         brand: "PEUGEOT",
         models: ["208", "2008", "3008", "5008", "EXPERT", "PARTNER", "TRAVELLER", "RIFTER", "ION", "BOXER"]
       }
+    ];
+
+    export const motoBrands = [
+      {
+        brand: "MARCA",
+        models: []
+      },
+      {
+        brand: "HONDA",
+        models: ["POP", "BIZ 110", "BIZ 125", "BROS", "XRE", "FAN", "TITAN", "CB 300", "CB 500", "CB 600", "CB 650", "CB 1000", "CB 1100", "BIZ 100", "SAHARA", "CRF"]
+      },
+      {
+        brand: "YAMAHA",
+        models: ["FACTOR 125", "FACTOR 150", "FAZER 150", "FAZER 250", "MT 03", "MT 07", "MT 09", "MT 10", "XJ6", "XJ6N"]
+      },
+      {
+        brand: "SUZUKI",
+        models: ["BANDIT 1250", "BANDIT 650", "GSX 750", "GSX 1000", "GSX 1250", "GSX 1300", "V-STROM 650", "V-STROM 1000", "V-STROM 1050", "V-STROM 1200"]
+      },
+      {
+        brand: "KAWASAKI",
+        models: ["NINJA 250", "NINJA 300", "NINJA 400", "NINJA 650", "NINJA 1000", "NINJA ZX-6R", "NINJA ZX-10R", "NINJA ZX-14R", "VERSYS 650", "VERSYS 1000"]
+      },
+      {
+        brand: "BMW",
+        models: ["G 310", "F 750", "F 850", "F 900", "R 1250", "R 1200", "R 1150", "R 1100", "R 850", "R 800"]
+      },
+      {
+        brand: "DUCATI",
+        models: ["MONSTER 797", "MONSTER 821", "MONSTER 1200", "MONSTER 1200S", "MONSTER 1200R", "MONSTER 1200 25° ANNIVERSARIO", "MONSTER 1200S STRIPE", "MONSTER 1200R STRIPE", "MONSTER 1200S STRIPE", "MONSTER 1200R STRIPE"]}
     ];

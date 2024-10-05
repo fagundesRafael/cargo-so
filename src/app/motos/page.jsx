@@ -2,12 +2,12 @@ import { LuChevronsUpDown } from "react-icons/lu";
 import { MdOutlineAddCircleOutline, MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import Link from "next/link";
-import { fetchAutos } from "@/actions/fetchItem/Auto";
+import { fetchMotos } from "@/actions/fetchItem/Moto";
 import { formatDate } from "@/utils/formatDate";
 import Pagination from "../../components/ui/pagination";
 import SearchHeader from "../../components/ui/SearchHeader";
 
-export default async function Automoveis({ searchParams }) {
+export default async function Motos({ searchParams }) {
   const pr = searchParams?.pr || "";
   const nu = searchParams?.nu || "";
   const pl = searchParams?.pl || "";
@@ -15,7 +15,7 @@ export default async function Automoveis({ searchParams }) {
   const ma = searchParams?.ma || "";
   const mo = searchParams?.mo || "";
   const page = searchParams?.page || 1;
-  const { count, autos } = await fetchAutos(pr, nu, pl, ch, ma, mo, page);
+  const { count, motos } = await fetchMotos(pr, nu, pl, ch, ma, mo, page);
 
   return (
     <div className={"flex flex-col min-h-[100vh] w-full"}>
@@ -32,10 +32,10 @@ export default async function Automoveis({ searchParams }) {
             <span>{""}</span>
           </div>
           <Link
-            href={"/automoveis/registrar"}
+            href={"/motos/registrar"}
             className={"flex gap-1 text-templateGreen items-center pb-2"}
           >
-            <h2 className={"underline "}>Registrar novo veículo</h2>
+            <h2 className={"underline "}>Registrar nova motocicleta</h2>
             <MdOutlineAddCircleOutline className={"text-xl"} />
           </Link>
         </div>
@@ -120,8 +120,13 @@ export default async function Automoveis({ searchParams }) {
               </tr>
             </thead>
             <tbody>
-              {autos &&
-                autos.map((auto, index) => (
+              {motos.length === 0 && (
+                <div className={"text-center mb-6 mt-10 text-templateGray"}>
+                  Nenhuma motocicleta foi encontrada no banco de dados!
+                </div>
+              )}
+              {motos &&
+                motos.map((moto, index) => (
                   <tr
                     key={index}
                     className={"flex justify-between text-[12px]"}
@@ -131,63 +136,63 @@ export default async function Automoveis({ searchParams }) {
                         "flex justify-between items-center w-[100px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      {auto.procedimento}
+                      {moto.procedimento}
                     </td>
                     <td
                       className={
                         "flex justify-between items-center w-[80px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      {auto.numero}
+                      {moto.numero}
                     </td>
                     <td
                       className={
                         "flex justify-between items-center w-[100px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      {auto.marca}
+                      {moto.marca}
                     </td>
                     <td
                       className={
                         "flex justify-between items-center w-[100px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      {auto.modelo}
+                      {moto.modelo}
                     </td>
                     <td
                       className={
                         "flex justify-between items-center w-[80px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      {auto.placa}
+                      {moto.placa}
                     </td>
                     <td
                       className={
                         "flex justify-between items-center w-[100px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      {auto.chassi}
+                      {moto.chassi}
                     </td>
                     <td
                       className={
                         "flex justify-between items-center w-[100px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      {auto.cor}
+                      {moto.cor}
                     </td>
                     <td
                       className={
                         "flex justify-between items-center w-[100px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      {formatDate(auto.createdAt)}
+                      {formatDate(moto.createdAt)}
                     </td>
                     <td
                       className={
                         "flex justify-between items-center w-[100px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      {auto.situacao}
+                      {moto.situacao}
                     </td>
 
                     <td
@@ -195,7 +200,7 @@ export default async function Automoveis({ searchParams }) {
                         "flex justify-end items-center w-[60px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      <Link href={`/automoveis/${auto.id}`}>
+                      <Link href={`/motos/${moto.id}`}>
                         <FaRegEdit
                           className={
                             "text-templateGreen w-6 transition-transform duration-200 ease-in-out hover:scale-125 hover:text-green-900 "

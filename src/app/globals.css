@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-} */
 
 body {
   @apply bg-bodyBackGround;
@@ -21,6 +16,7 @@ select[id="searchOptions"] {
 select[id="procedimento"],
 select[id="situacao"],
 select[id="chave"],
+select[id="capacete"],
 select[id="cor"],
 select[id="marca"],
 select[id="modelo"],
@@ -42,6 +38,7 @@ input[id="text"] {
 select[id="procedimento"]:disabled,
 select[id="situacao"]:disabled,
 select[id="chave"]:disabled,
+select[id="capacete"]:disabled,
 select[id="cor"]:disabled,
 select[id="marca"]:disabled,
 select[id="modelo"]:disabled,
@@ -68,4 +65,18 @@ select[id="searchOptions"],
 input[id="searchOptions"] {
   @apply block mb-2 rounded-none;
   @apply border-none p-1;
+}
+
+.loader {
+  height: 4px;
+  width: 130px;
+  --c:no-repeat linear-gradient(#6100ee 0 0);
+  background: var(--c),var(--c),#d7b8fc;
+  background-size: 60% 100%;
+  animation: l16 3s infinite;
+}
+@keyframes l16 {
+  0%   {background-position:-150% 0,-150% 0}
+  66%  {background-position: 250% 0,-150% 0}
+  100% {background-position: 250% 0, 250% 0}
 }

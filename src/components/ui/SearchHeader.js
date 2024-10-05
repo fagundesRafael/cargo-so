@@ -47,7 +47,7 @@ export default function SearchHeader() {
           <Search searchValue={"ch"} label={"pelo chassi:"} />
           <Search searchValue={"ma"} label={"pela marca:"} />
           <Search searchValue={"mo"} label={"pelo modelo:"} />
-          <div></div>
+          <div className={"invisible"} ></div>
         </>
       )}
     </div>

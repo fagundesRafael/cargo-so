@@ -18,7 +18,7 @@ export default function Sidebar() {
       list: [
         {
           label: "Motocicletas",
-          path: "/motocicletas",
+          path: "/motos",
           icon: <PiMotorcycleFill />,
         },
         {

@@ -1,12 +1,12 @@
 "use client";
-import { updateAuto } from "@/actions/updateItem/Auto";
+import { updateMoto } from "@/actions/updateItem/Moto";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { formatDateWithTime } from "@/utils/formatDate";
-import { colors, procedures, carBrands } from "@/utils/avaliableOptions";
+import { colors, procedures, motoBrands } from "@/utils/avaliableOptions";
 
-export const EditForm = ({ auto }) => {
-  const [data, setData] = useState(JSON.parse(auto));
+export const EditForm = ({ moto }) => {
+  const [data, setData] = useState(JSON.parse(moto));
   const [brand, setBrand] = useState(data.marca);
   const [imageUrl, setImageUrl] = useState(data.imagem);
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ export const EditForm = ({ auto }) => {
   const updatedAt = formatDateWithTime(data.updatedAt);
 
   console.log("fetched data", data);
-  console.log("fetched auto", auto);
+  console.log("fetched moto", moto);
 
   const session = useSession();
   const status = session.status;
@@ -30,7 +30,7 @@ export const EditForm = ({ auto }) => {
     const formData = new FormData(e.target);
     formData.append("updatedBy", userNameSession);
 
-    await updateAuto(formData);
+    await updateMoto(formData);
   }
 
   return (
@@ -79,7 +79,7 @@ export const EditForm = ({ auto }) => {
         onChange={(e) => setBrand(e.target.value)}
         defaultValue={data.marca}
       >
-        {carBrands.map((brand) => (
+        {motoBrands.map((brand) => (
           <option key={brand.brand} value={brand.brand}>
             {brand.brand}
           </option>
@@ -94,7 +94,7 @@ export const EditForm = ({ auto }) => {
         disabled={loading || !brand}
         defaultValue={data.modelo}
       >
-        {carBrands
+        {motoBrands
           .filter((car) => car.brand === brand)
           .flatMap((car) => car.models)
           .map((model) => (
@@ -159,10 +159,23 @@ export const EditForm = ({ auto }) => {
       </select>
       <select
         className={"w-44"}
+        name="capacete"
+        id="capacete"
+        required={true}
+        disabled={false}
+        title="Informe se houve capacete apreendido."
+        defaultValue={data.capacete}
+      >
+        <option value="">CHAVE APREENDIDA?</option>
+        <option value={true}>SIM</option>
+        <option value={false}>NÃO</option>
+      </select>
+      <select
+        className={"w-44"}
         name="situacao"
         id="situacao"
         required={true}
-        title="Informe a localização do veículo em tela."
+        title="Informe a localização da motocicleta em tela."
         defaultValue={data.situacao}
       >
         <option value="">SITUAÇÃO</option>

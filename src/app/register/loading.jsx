@@ -2,14 +2,15 @@ import Image from "next/image";
 
 export default function Loading() {
   return (
-    <div className={"m-auto"} >
-        <h1 className={"text-[100px]"} >Carregando página...</h1>
+    <div className={"flex flex-col justify-center items-center"} >
       <Image
             src={"/cargo-utils/logos/Cargo-logo-02.png"}
             alt={""}
-            width={100}
-            height={100}
+            width={50}
+            height={50}
           />
+          <h1 className={"text-templateDeadBlue"} >Carregando...</h1>
+          <div class="loader" ></div>
     </div>
   )
 }

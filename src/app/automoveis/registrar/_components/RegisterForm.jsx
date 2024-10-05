@@ -2,8 +2,7 @@
 import { addNewAuto } from "@/actions/addItem/Auto";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { colors, procedures, carBrands } from "@/utils/selectOptions";
-import UpLoad from "@/components/ui/UpLoad";
+import { colors, procedures, carBrands } from "@/utils/avaliableOptions";
 
 export default function Registrar() {
   const [loading, setLoading] = useState(false);
@@ -35,7 +34,7 @@ export default function Registrar() {
       }
     >
       <label className={"w-full p-1 mb-2"}>
-        PREENCHA CORRETAMENTE OS DADOS DO NOVO VEÍCULO:
+        PREENCHA CORRETAMENTE OS DADOS DA NOVA MOTOCICLETA:
       </label>
       <select
         className={"w-44"}
@@ -147,6 +146,7 @@ export default function Registrar() {
         <option value={true}>SIM</option>
         <option value={false}>NÃO</option>
       </select>
+      
       <select
         className={"w-44"}
         name="situacao"
