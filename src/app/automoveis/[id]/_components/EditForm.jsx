@@ -3,10 +3,13 @@ import { updateAuto } from "@/actions/updateItem/Auto";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { formatDateWithTime } from "@/utils/formatDate";
+import { colors, procedures, carBrands } from "@/utils/selectOptions";
 
 export const EditForm = ({ auto }) => {
   const [data, setData] = useState(JSON.parse(auto));
+  const [brand, setBrand] = useState(data.marca);
   const [imageUrl, setImageUrl] = useState(data.imagem);
+  const [loading, setLoading] = useState(false);
 
   const createdAt = formatDateWithTime(data.createdAt);
   const updatedAt = formatDateWithTime(data.updatedAt);
@@ -49,16 +52,11 @@ export const EditForm = ({ auto }) => {
         defaultValue={data.procedimento}
         required={true}
       >
-        <option value="">PROCEDIMENTO</option>
-        <option value="APF">FLAGRANTE</option>
-        <option value="IPL">INQUÉRITO</option>
-        <option value="BOL">BOLETIM</option>
-        <option value="TCO">TERMO CIRCUNSTANCIADO</option>
-        <option value="BOC">BOC</option>
-        <option value="MPE">MINISTÉRIO PÚBLICO</option>
-        <option value="JUD">JUDICIÁRIO</option>
-        <option value="SEI">SEI</option>
-        <option value="OUTRO">OUTRO</option>
+        {procedures.map((procedure) => (
+          <option key={procedure.label} value={procedure.value}>
+            {procedure.label}
+          </option>
+        ))}
       </select>
       <input
         className={"w-44"}
@@ -72,27 +70,39 @@ export const EditForm = ({ auto }) => {
         defaultValue={data.numero}
       />
 
-      <input
+      <select
         className={"w-44"}
         name="marca"
         id="marca"
-        type="text"
-        placeholder="MARCA"
-        disabled={false}
-        style={{ textTransform: "uppercase" }}
+        required={true}
+        disabled={loading}
+        onChange={(e) => setBrand(e.target.value)}
         defaultValue={data.marca}
-      />
+      >
+        {carBrands.map((brand) => (
+          <option key={brand.brand} value={brand.brand}>
+            {brand.brand}
+          </option>
+        ))}
+      </select>
 
-      <input
+      <select
         className={"w-44"}
         name="modelo"
         id="modelo"
-        type="text"
-        placeholder="MODELO"
-        disabled={false}
-        style={{ textTransform: "uppercase" }}
+        required={true}
+        disabled={loading || !brand}
         defaultValue={data.modelo}
-      />
+      >
+        {carBrands
+          .filter((car) => car.brand === brand)
+          .flatMap((car) => car.models)
+          .map((model) => (
+            <option key={model} value={model}>
+              {model}
+            </option>
+          ))}
+      </select>
 
       <input
         className={"w-44"}
@@ -128,17 +138,11 @@ export const EditForm = ({ auto }) => {
         disabled={false}
         defaultValue={data.cor}
       >
-        <option value="">COR</option>
-        <option value="BRANCO">BRANCO</option>
-        <option value="CINZA">CINZA</option>
-        <option value="AZUL">AZUL</option>
-        <option value="PRETO">PRETO</option>
-        <option value="VERMELHO">VERMELHO</option>
-        <option value="ROSA">ROSA</option>
-        <option value="VERDE">VERDE</option>
-        <option value="AMARELO">AMARELO</option>
-        <option value="ROXO">ROXO</option>
-        <option value="OUTRO">OUTRO</option>
+        {colors.map((color) => (
+          <option key={color.label} value={color.value}>
+            {color.label}
+          </option>
+        ))}
       </select>
       <select
         className={"w-44"}
@@ -192,19 +196,23 @@ export const EditForm = ({ auto }) => {
       >
         REGISTRAR VEÍCULO
       </button>
-      <div className={"flex text-center items-center ml-auto"} >
-      <span id="spanCreatedBy">
-        Criado por <span className={"underline font-semibold"} >{data.createdBy}</span> <br />
-        dia {createdAt.slice(0, 10)}, às {createdAt.slice(11, 14)}h {" "}
-        {createdAt.slice(15, 17)}m.
-      </span>
-      {data.updatedAt && (
+      <div className={"flex text-center items-center ml-auto"}>
         <span id="spanCreatedBy">
-        Atualizado por <span className={"underline font-semibold"} >{data.updatedBy}</span> <br />
-        no dia {updatedAt.slice(0, 10)}, às {updatedAt.slice(11, 14)}h {" "}
-        {updatedAt.slice(15, 17)}m.
-      </span>
-      )}
+          Criado por{" "}
+          <span className={"underline font-semibold"}>{data.createdBy}</span>{" "}
+          <br />
+          dia {createdAt.slice(0, 10)}, às {createdAt.slice(11, 14)}h{" "}
+          {createdAt.slice(15, 17)}m.
+        </span>
+        {data.updatedAt && (
+          <span id="spanCreatedBy">
+            Atualizado por{" "}
+            <span className={"underline font-semibold"}>{data.updatedBy}</span>{" "}
+            <br />
+            no dia {updatedAt.slice(0, 10)}, às {updatedAt.slice(11, 14)}h{" "}
+            {updatedAt.slice(15, 17)}m.
+          </span>
+        )}
       </div>
     </form>
   );

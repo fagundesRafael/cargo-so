@@ -22,6 +22,8 @@ select[id="procedimento"],
 select[id="situacao"],
 select[id="chave"],
 select[id="cor"],
+select[id="marca"],
+select[id="modelo"],
 input[id="imagem"],
 input[id="email"],
 input[id="name"],
@@ -37,6 +39,12 @@ input[id="text"] {
   @apply border p-2 border-gray-300 bg-gray-100;
 }
 
+select[id="procedimento"]:disabled,
+select[id="situacao"]:disabled,
+select[id="chave"]:disabled,
+select[id="cor"]:disabled,
+select[id="marca"]:disabled,
+select[id="modelo"]:disabled,
 input[id="imagem"]:disabled,
 input[id="email"]:disabled,
 input[id="name"]:disabled,
