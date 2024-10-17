@@ -32,7 +32,7 @@ export default async function Motos({ searchParams }) {
             <span>{""}</span>
           </div>
           <Link
-            href={"/motos/registrar"}
+            href={"/motocicletas/registrar"}
             className={"flex gap-1 text-templateGreen items-center pb-2"}
           >
             <h2 className={"underline "}>Registrar nova motocicleta</h2>
@@ -200,7 +200,7 @@ export default async function Motos({ searchParams }) {
                         "flex justify-end items-center w-[60px] p-1 border-b-2 overflow-hidden text-ellipsis whitespace-nowrap "
                       }
                     >
-                      <Link href={`/motos/${moto.id}`}>
+                      <Link href={`/motocicletas/${moto.id}`}>
                         <FaRegEdit
                           className={
                             "text-templateGreen w-6 transition-transform duration-200 ease-in-out hover:scale-125 hover:text-green-900 "

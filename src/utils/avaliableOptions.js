@@ -30,7 +30,7 @@ export const procedures = [
     export const carBrands = [
       {
         brand: "MARCA",
-        models: []
+        models: [""]
       },
       {
         brand: "TOYOTA",
@@ -93,7 +93,7 @@ export const procedures = [
     export const motoBrands = [
       {
         brand: "MARCA",
-        models: []
+        models: [""]
       },
       {
         brand: "HONDA",

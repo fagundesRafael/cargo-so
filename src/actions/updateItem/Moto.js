@@ -58,6 +58,6 @@ export const updateMoto = async (formData) => {
     }
     throw new Error(errorMessage);
   }
-  revalidatePath("/motos");
-  redirect("/motos");
+  revalidatePath("/motocicletas");
+  redirect("/motocicletas");
 };

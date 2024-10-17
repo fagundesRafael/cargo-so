@@ -7,7 +7,7 @@ export default function MenuLink({ item }) {
     <Link href={item.path} className={"flex items-center my-2 gap-1"}>
       <div
         className={
-          "flex items-center shadow-lg justify-center border rounded-[4px] w-7 h-7 bg-white"
+          `flex items-center shadow-lg justify-center border rounded-[4px] w-7 h-7 bg-white`
         }
       >
         {item.icon}

@@ -53,6 +53,6 @@ export const addNewMoto = async (formData) => {
     }
     throw new Error('Ocorreu um erro de validação.');
   }
-  revalidatePath("/motos");
-  redirect("/motos");
+  revalidatePath("/motocicletas");
+  redirect("/motocicletas");
 };

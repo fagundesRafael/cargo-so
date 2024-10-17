@@ -1,4 +1,4 @@
-import RegisterForm from "@/app/motos/registrar/_components/RegisterForm";
+import RegisterForm from "@/app/motocicletas/registrar/_components/RegisterForm";
 import Upload from "@/components/ui/UpLoad";
 
 export default function Registrar() {

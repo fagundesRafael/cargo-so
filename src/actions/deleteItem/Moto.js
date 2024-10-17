@@ -15,5 +15,5 @@ export const deleteMoto = async (formData) => {
       throw new Error("Failed to delete a Moto!");
     }
   
-    revalidatePath("/motos");
+    revalidatePath("/motocicletas");
   };

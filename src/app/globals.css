@@ -35,6 +35,8 @@ input[id="text"] {
   @apply border p-2 border-gray-300 bg-gray-100;
 }
 
+
+
 select[id="procedimento"]:disabled,
 select[id="situacao"]:disabled,
 select[id="chave"]:disabled,
@@ -65,6 +67,17 @@ select[id="searchOptions"],
 input[id="searchOptions"] {
   @apply block mb-2 rounded-none;
   @apply border-none p-1;
+}
+
+input[id="brand"],
+input[id="model"] {
+  @apply block mb-1 rounded-none;
+  @apply border p-1 border-gray-300 bg-gray-100;
+}
+
+input[id="brand"]:disabled,
+input[id="model"]:disabled {
+  @apply bg-gray-300 border-0 cursor-not-allowed text-gray-500;
 }
 
 .loader {
